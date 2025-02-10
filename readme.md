@@ -3,14 +3,17 @@
 This project is a web application that allows users to search for Pokémon using the PokéAPI. The frontend is built with HTMX and Tailwind CSS, while the backend is powered by Flask. Advanced search filters are also included to refine searches based on attributes like generation, attack type, and weight range.
 
 ## Prerequisites
-This guide assumes that **Docker** and **Python** are already installed on your machine. If not, please install it before proceeding.
+This guide assumes that **Docker** is already installed on your machine. If not, please install it before proceeding.
+
+## Running Tests
+All tests were run using the VSCode extension for tests. This extension allows you to easily run and debug tests directly within the editor. Make sure the extension is installed and configured for your environment to run the tests.
 
 ## Building and Running the Application
 
 1. **Clone the repository** (if you haven't already):
    ```sh
    git clone https://github.com/your-repo/pokemon-search-app.git
-   cd pokemon-search-app
+   cd PokeApp
    ```
 
 2. **Build the Docker container**:
@@ -28,6 +31,8 @@ This guide assumes that **Docker** and **Python** are already installed on your 
    ```
    http://localhost:5000
    ```
+
+
 
 ## Stopping the Container
 To stop the running container, first find its ID with:
