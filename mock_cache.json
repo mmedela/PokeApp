@@ -1,0 +1,18 @@
+{
+    "pikachu": {
+        "name": "pikachu",
+        "types": [
+            "electric"
+        ],
+        "vulnerable_to": [
+            "ground"
+        ],
+        "resistant_to": [
+            "electric"
+        ],
+        "immune_to": [],
+        "super_effective": [
+            "water"
+        ]
+    }
+}

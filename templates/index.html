@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Search</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-center p-10" onclick="hideResults(event)">
+    <h1 class="text-3xl font-bold mb-4">Pokémon Search</h1>
+
+    <div class="relative inline-block">
+        <input type="text" id="search" 
+            class="border p-2 rounded w-100" 
+            placeholder="Enter Pokémon name..."
+            hx-get="/search-dropdown" 
+            hx-trigger="input changed delay:250ms" 
+            hx-target="#search-results" 
+            hx-indicator="#loading"
+            name="name"
+            onfocus="showResults()"
+            oninput="showResults()">
+
+            <button class="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
+                onclick="toggleAdvancedSearch()">
+                    Advanced Search
+            </button>
+        
+        <div id="loading" class="htmx-indicator hidden">Loading...</div>
+        
+        <div id="search-results" class="mt-1 text-left w-64 bg-white shadow-md rounded absolute hidden"></div>
+    </div>
+
+    <div id="advanced-search" class="hidden p-4 border rounded bg-gray-200 mt-4">
+        <h2 class="text-lg font-bold mb-2">Advanced Search Filters</h2>
+    
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block">Generation:</label>
+                <select id="generation" name="generation" class="border p-2 rounded w-full">
+                    <option value="">Any</option>
+                    <option value="generation-i">Gen 1 (Kanto)</option>
+                    <option value="generation-ii">Gen 2 (Johto)</option>
+                    <option value="generation-iii">Gen 3 (Hoenn)</option>
+                    <option value="generation-iv">Gen 4 (Sinnoh)</option>
+                    <option value="generation-v">Gen 5 (Unova)</option>
+                    <option value="generation-vi">Gen 6 (Kalos)</option>
+                    <option value="generation-vii">Gen 7 (Alola)</option>
+                    <option value="generation-viii">Gen 8 (Galar)</option>
+                    <option value="generation-ix">Gen 9 (Paldea)</option>
+                </select>
+            </div>
+    
+            <div>
+                <label class="block">Super Effective Against:</label>
+                <select id="super-effective-against" name="super-effective-against" class="border p-2 rounded w-full">
+                    {% for type in type_list %}
+                        {% if loop.first %}
+                            <option value="">{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.lower() }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label class="block">Resistant To:</label>
+                <select id="resistant-to" name="resistant-to" class="border p-2 rounded w-full">
+                    {% for type in type_list %}
+                        {% if loop.first %}
+                            <option value="">{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.lower() }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label class="block">Innmune To:</label>
+                <select id="immune-to" name="immune-to" class="border p-2 rounded w-full">
+                    {% for type in type_list %}
+                        {% if loop.first %}
+                            <option value="">{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.lower() }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label class="block">Vulnerable To:</label>
+                <select id="vulnerable-to" name="vulnerable-to" class="border p-2 rounded w-full">
+                    {% for type in type_list %}
+                        {% if loop.first %}
+                            <option value="">{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.lower() }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+    
+            <div>
+                <label class="block">Move Name:</label>
+                <input type="text" id="move" name="move" class="border p-2 rounded w-full" placeholder="Enter move name (Ej: vine whip, bind)">
+            </div>
+    
+            <div>
+                <label class="block">Weight Range (Kg):</label>
+                <div class="flex space-x-2">
+                    <input type="number" id="min-weight" name="min-weight" class="border p-2 rounded w-1/2" placeholder="Min" min="0">
+                    <input type="number" id="max-weight" name="max-weight" class="border p-2 rounded w-1/2" placeholder="Max" min="0">
+                </div>
+            </div>
+    
+            <div>
+                <label class="block">Types:</label>
+                <select id="types" name="types" class="border p-2 rounded w-full">
+                    {% for type in type_list %}
+                        {% if loop.first %}
+                            <option value="">{{ type }}</option>
+                        {% else %}
+                            <option value="{{ type.lower() }}">{{ type }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div>
+                <label class="block">Pokédex Number:</label>
+                <input type="number" id="pokedex-number" name="pokedex-number" class="border p-2 rounded w-full" placeholder="Enter number">
+            </div>
+        </div>
+    
+        <button class="mt-4 px-4 py-2 bg-green-600 text-white rounded w-full hover:bg-green-900"
+                hx-get="/search-results"
+                hx-target="#search-results-container"
+                hx-trigger="click"
+                hx-include="[name=generation], 
+                            [name=move], 
+                            [name=region], 
+                            [name=min-weight], 
+                            [name=max-weight], 
+                            [name=vulnerable-to], 
+                            [name=super-effective], 
+                            [name=resistant-to], 
+                            [name=immune-to], 
+                            [name=types], 
+                            [name=pokedex-number], 
+                            [name=name]"
+                onclick="toggleAdvancedSearch()">
+            Search
+        </button>
+    </div>
+
+    <div id="search-results-container" class="mt-4"></div>
+
+    <script>
+    function showResults() {
+        document.getElementById("search-results").classList.remove("hidden");
+        document.getElementById("advanced-search").classList.add("hidden");
+
+    }
+
+    function hideResults(event) {
+        const searchBox = document.getElementById("search");
+        const resultsBox = document.getElementById("search-results");
+
+        if (!searchBox.contains(event.target) && !resultsBox.contains(event.target)) {
+            resultsBox.classList.add("hidden");
+        }
+    }
+    function hideResultsOnSelect() {
+        document.getElementById("search-results").classList.add("hidden");
+    }
+    function toggleAdvancedSearch() {
+        document.getElementById("advanced-search").classList.toggle("hidden");
+    }
+</script>
+</body>
+</html>

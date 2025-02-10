@@ -1,0 +1,35 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {% for pokemon in pokemon_list %}
+    <div class="bg-white p-3 rounded shadow-md flex items-center space-x-4 max-w-xl">
+        <!-- Image aligned to the left -->
+        <img src="{{ pokemon['sprite'] }}" alt="{{ pokemon['name'] }}" class="w-40 h-40">
+
+        <!-- Info -->
+        <div class="text-sm w-full">
+            <h2 class="text-lg font-bold capitalize">{{ pokemon['name'] }}</h2>
+            <p><strong>Height:</strong> {{ pokemon['height'] }} cm</p>
+            <p><strong>Weight:</strong> {{ pokemon['weight'] }} Kg</p>
+            <p><strong>Type(s):</strong> 
+                {% for type in pokemon['types'] %}
+                    {{ type }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Weak to:</strong> 
+                {% for type in pokemon['vulnerable_to'] %}
+                    {{ type }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Resistant to:</strong> 
+                {% for type in pokemon['resistant_to'] %}
+                    {{ type }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p><strong>Super Effective to:</strong> 
+                {% for type in pokemon['super_effective'] %}
+                    {{ type }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
