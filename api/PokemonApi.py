@@ -1,5 +1,7 @@
 import requests
 
+from common import POKEMON_PROPERTY
+
 POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/"
 
 class PokemonAPI:
@@ -20,14 +22,14 @@ class PokemonAPI:
         speciesData = requests.get(data["species"]["url"]).json()
         
         return {
-            "id": data["id"],
-            "name": name,
-            "generation": speciesData["generation"]["name"],
-            "height": data["height"] * 10,
-            "weight": data["weight"] / 10,
-            "sprite": data['sprites']['front_default'],
-            "types": [t["type"]["name"] for t in data["types"]],
-            "moves": [" ".join(move["move"]["name"].split("-")) for move in data["moves"]],
+            POKEMON_PROPERTY.POKEDEX_NUMBER.value: data["id"],
+            POKEMON_PROPERTY.NAME.value: name,
+            POKEMON_PROPERTY.GENERATION.value: speciesData["generation"]["name"],
+            POKEMON_PROPERTY.HEIGHT.value: data["height"] * 10,
+            POKEMON_PROPERTY.WEIGHT.value: data["weight"] / 10,
+            POKEMON_PROPERTY.SPRITE.value: data['sprites']['front_default'],
+            POKEMON_PROPERTY.TYPES.value: [t["type"]["name"] for t in data["types"]],
+            POKEMON_PROPERTY.MOVES.value: [" ".join(move["move"]["name"].split("-")) for move in data["moves"]],
         }
 
     @staticmethod
@@ -40,12 +42,10 @@ class PokemonAPI:
         for t in response.json()["results"]:
             typeData = requests.get(t["url"]).json()
             effectiveness[t["name"]] = {
-                "double_damage_from": [damageType["name"] for damageType in typeData["damage_relations"]["double_damage_from"]],
-                "half_damage_from": [damageType["name"] for damageType in typeData["damage_relations"]["half_damage_from"]],
-                "no_damage_from": [damageType["name"] for damageType in typeData["damage_relations"]["no_damage_from"]],
-                "double_damage_to": [damageType["name"] for damageType in typeData["damage_relations"]["double_damage_to"]],
-                "half_damage_to": [damageType["name"] for damageType in typeData["damage_relations"]["half_damage_to"]],
-                "no_damage_to": [damageType["name"] for damageType in typeData["damage_relations"]["no_damage_to"]]
+                POKEMON_PROPERTY.VULNERABLE_TO.value: [damageType["name"] for damageType in typeData["damage_relations"]["double_damage_from"]],
+                POKEMON_PROPERTY.RESISTANT_TO.value: [damageType["name"] for damageType in typeData["damage_relations"]["half_damage_from"]],
+                POKEMON_PROPERTY.IMMUNE_TO.value: [damageType["name"] for damageType in typeData["damage_relations"]["no_damage_from"]],
+                POKEMON_PROPERTY.SUPER_EFFECTIVE.value: [damageType["name"] for damageType in typeData["damage_relations"]["double_damage_to"]],
             }
         return effectiveness
 

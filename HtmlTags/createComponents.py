@@ -36,14 +36,26 @@ def createPartialNameQueryButton(pokemonName):
 
     return button.render()
 
-def createPaginationControllers(page, totalPages, query):
+def createPaginationControllers(page, totalPages):
     div = HtmlTag('div', {
         "class": "flex justify-between mt-2"
     })
     prevButton = HtmlTag("button", {
-        "hx-get":f'/search-results?name={query}&page={page-1}',
+        "hx-get":f'/search-results?page={page-1}',
         "hx-target":'#search-results-container',
-        "class":'px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded'
+        "class":'px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded',
+        "hx-include":"[name=generation],\
+                            [name=move],\
+                            [name=region],\
+                            [name=min-weight],\
+                            [name=max-weight],\
+                            [name=vulnerable-to],\
+                            [name=super-effective],\
+                            [name=resistant-to],\
+                            [name=immune-to],\
+                            [name=types], \
+                            [name=pokedex-number],\
+                            [name=name]"
     }, ["Prev"])
     if page == 1:
         prevButton.addAttribute("disabled", "true")
@@ -51,9 +63,21 @@ def createPaginationControllers(page, totalPages, query):
     pageCounter = HtmlTag('span', {}, [f"Page {page} of {totalPages}"])
 
     nextButton = HtmlTag("button", {
-        "hx-get":f'/search-results?name={query}&page={page+1}',
+        "hx-get":f'/search-results?page={page+1}',
         "hx-target":'#search-results-container',
-        "class":'px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded'
+        "class":'px-3 py-1 bg-gray-300 hover:bg-gray-400 rounded',
+        "hx-include":"[name=generation],\
+                            [name=move],\
+                            [name=region],\
+                            [name=min-weight],\
+                            [name=max-weight],\
+                            [name=vulnerable-to],\
+                            [name=super-effective],\
+                            [name=resistant-to],\
+                            [name=immune-to],\
+                            [name=types], \
+                            [name=pokedex-number],\
+                            [name=name]"
     }, ["Next"])
     if page == totalPages:
         nextButton.addAttribute("disabled", "true")

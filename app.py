@@ -1,3 +1,4 @@
+from common import POKEMON_PROPERTY, LIST_OF_TYPES
 from flask import Flask, render_template, request
 import os
 from HtmlTags.createComponents import createDropDownSearchOptions, createPaginationControllers, createPartialNameQueryButton
@@ -9,24 +10,7 @@ app = Flask(__name__)
 
 CACHE_DIR = "cache"
 POKEMON_CACHE_FILE = os.path.join(CACHE_DIR, "pokemon_data.json")
-LIST_OF_TYPES = [   "Any",
-                    "Fire",
-                    "Water",
-                    "Grass",
-                    "Electric",
-                    "Ice",
-                    "Fighting",
-                    "Poison",
-                    "Ground",
-                    "Flying",
-                    "Psychic",
-                    "Bug",
-                    "Rock",
-                    "Ghost",
-                    "Dragon",
-                    "Dark",
-                    "Steel",
-                    "Fairy",]
+
 
 cache = PokemonCache(
     POKEMON_CACHE_FILE, 
@@ -59,17 +43,17 @@ def search_dropdown():
 @app.route("/search-results", methods=["GET"])
 def search_results():
     filters = {
-        "query": request.args.get("name", "").lower(),
-        "vulnerable_to": request.args.get("vulnerable-to", "").lower(),
-        "super_effective": request.args.get("super-effective", "").lower(),
-        "resistant_to": request.args.get("resistant-to", "").lower(),
-        "immune_to": request.args.get("immune-to", "").lower(),
-        "pokedex_number": request.args.get("pokedex-number", "").lower(),
-        "types": request.args.get("types", "").lower(),
-        "generation": request.args.get("generation", "").lower(),
-        "moves": request.args.get("move"),
-        "min_weight": float(request.args.get("min-weight", 0) or 0),
-        "max_weight": float(request.args.get("max-weight", 0) or 0)
+        POKEMON_PROPERTY.NAME: request.args.get(POKEMON_PROPERTY.NAME.value, "").lower(),
+        POKEMON_PROPERTY.VULNERABLE_TO: request.args.get(POKEMON_PROPERTY.VULNERABLE_TO.value, "").lower(),
+        POKEMON_PROPERTY.SUPER_EFFECTIVE: request.args.get(POKEMON_PROPERTY.SUPER_EFFECTIVE.value, "").lower(),
+        POKEMON_PROPERTY.RESISTANT_TO: request.args.get(POKEMON_PROPERTY.RESISTANT_TO.value, "").lower(),
+        POKEMON_PROPERTY.IMMUNE_TO: request.args.get(POKEMON_PROPERTY.IMMUNE_TO.value, "").lower(),
+        POKEMON_PROPERTY.POKEDEX_NUMBER: request.args.get(POKEMON_PROPERTY.POKEDEX_NUMBER.value, "").lower(),
+        POKEMON_PROPERTY.TYPES: request.args.get(POKEMON_PROPERTY.TYPES.value, "").lower(),
+        POKEMON_PROPERTY.GENERATION: request.args.get(POKEMON_PROPERTY.GENERATION.value, "").lower(),
+        POKEMON_PROPERTY.MOVES: request.args.get(POKEMON_PROPERTY.MOVES.value),
+        POKEMON_PROPERTY.MIN_WEIGHT: float(request.args.get(POKEMON_PROPERTY.MIN_WEIGHT.value, 0) or 0),
+        POKEMON_PROPERTY.MAX_WEIGHT: float(request.args.get(POKEMON_PROPERTY.MAX_WEIGHT.value, 0) or 0)
     }
     matches = PokemonSearcher.searchPokemonWithMultipleFilters(cache, filters)
 
@@ -80,7 +64,7 @@ def search_results():
     paginatedResults = matches[start:end]
     resultsHtml = render_template("pokemon_info.html", pokemon_list=paginatedResults)
 
-    paginationHtml = createPaginationControllers(page, totalPages, filters["query"]) if totalPages > 1 else ""
+    paginationHtml = createPaginationControllers(page, totalPages) if totalPages > 1 else ""
 
     return resultsHtml + paginationHtml
 
@@ -88,7 +72,6 @@ def search_results():
 @app.route("/pokemon/<name>")
 def get_pokemon(name):
     pokemon = cache.pokemonData.get(name.lower())
-    print(pokemon)
     return render_template("pokemon_info.html", pokemon_list=[pokemon]) if pokemon else "<p class='text-red-500'>Pokémon not found</p>"
 
 

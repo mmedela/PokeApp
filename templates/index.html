@@ -54,7 +54,7 @@
     
             <div>
                 <label class="block">Super Effective Against:</label>
-                <select id="super-effective-against" name="super-effective-against" class="border p-2 rounded w-full">
+                <select id="super-effective" name="super-effective" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -106,7 +106,7 @@
     
             <div>
                 <label class="block">Move Name:</label>
-                <input type="text" id="move" name="move" class="border p-2 rounded w-full" placeholder="Enter move name (Ej: vine whip, bind)">
+                <input type="text" id="moves" name="moves" class="border p-2 rounded w-full" placeholder="Enter move name (Ej: vine whip, bind)">
             </div>
     
             <div>
