@@ -54,7 +54,7 @@
     
             <div>
                 <label class="block">Super Effective Against:</label>
-                <select id="super-effective" name="super-effective" class="border p-2 rounded w-full">
+                <select id="super_effective" name="super_effective" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -67,7 +67,7 @@
 
             <div>
                 <label class="block">Resistant To:</label>
-                <select id="resistant-to" name="resistant-to" class="border p-2 rounded w-full">
+                <select id="resistant_to" name="resistant_to" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -80,7 +80,7 @@
 
             <div>
                 <label class="block">Innmune To:</label>
-                <select id="immune-to" name="immune-to" class="border p-2 rounded w-full">
+                <select id="immune_to" name="immune_to" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -93,7 +93,7 @@
 
             <div>
                 <label class="block">Vulnerable To:</label>
-                <select id="vulnerable-to" name="vulnerable-to" class="border p-2 rounded w-full">
+                <select id="vulnerable_to" name="vulnerable_to" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -112,8 +112,8 @@
             <div>
                 <label class="block">Weight Range (Kg):</label>
                 <div class="flex space-x-2">
-                    <input type="number" id="min-weight" name="min-weight" class="border p-2 rounded w-1/2" placeholder="Min" min="0">
-                    <input type="number" id="max-weight" name="max-weight" class="border p-2 rounded w-1/2" placeholder="Max" min="0">
+                    <input type="number" id="min_weight" name="min_weight" class="border p-2 rounded w-1/2" placeholder="Min" min="0">
+                    <input type="number" id="max_weight" name="max_weight" class="border p-2 rounded w-1/2" placeholder="Max" min="0">
                 </div>
             </div>
     
@@ -143,12 +143,12 @@
                 hx-include="[name=generation], 
                             [name=move], 
                             [name=region], 
-                            [name=min-weight], 
-                            [name=max-weight], 
-                            [name=vulnerable-to], 
-                            [name=super-effective], 
-                            [name=resistant-to], 
-                            [name=immune-to], 
+                            [name=min_weight], 
+                            [name=max_weight], 
+                            [name=vulnerable_to], 
+                            [name=super_effective], 
+                            [name=resistant_to], 
+                            [name=immune_to], 
                             [name=types], 
                             [name=pokedex-number], 
                             [name=name]"
