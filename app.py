@@ -24,7 +24,7 @@ if not cache.loadCache():
 
 @app.route("/")
 def index():
-    return render_template("index.html", type_list=LIST_OF_TYPES)
+    return render_template("index.html", type_list=LIST_OF_TYPES, pokemon_property=POKEMON_PROPERTY)
 
 
 @app.route("/search-dropdown", methods=["GET"])
