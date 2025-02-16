@@ -44,10 +44,10 @@ class PokemonSearcher:
                 if not all(move.strip() in data[POKEMON_PROPERTY.MOVES.value] for move in moves):
                     continue
 
-            if filters.get(POKEMON_PROPERTY.MIN_WEIGHT) and data[POKEMON_PROPERTY.MIN_WEIGHT.value] <= filters[POKEMON_PROPERTY.MIN_WEIGHT]:
+            if filters.get(POKEMON_PROPERTY.MIN_WEIGHT) and data[POKEMON_PROPERTY.WEIGHT.value] <= filters[POKEMON_PROPERTY.MIN_WEIGHT]:
                 continue
 
-            if filters.get(POKEMON_PROPERTY.MAX_WEIGHT) and data[POKEMON_PROPERTY.MAX_WEIGHT.value] >= filters[POKEMON_PROPERTY.MAX_WEIGHT]:
+            if filters.get(POKEMON_PROPERTY.MAX_WEIGHT) and data[POKEMON_PROPERTY.WEIGHT.value] >= filters[POKEMON_PROPERTY.MAX_WEIGHT]:
                 continue
 
             matches.append(data)
