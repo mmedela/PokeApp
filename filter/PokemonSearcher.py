@@ -36,7 +36,7 @@ class PokemonSearcher:
             if filters.get(POKEMON_PROPERTY.GENERATION) and data[POKEMON_PROPERTY.GENERATION.value] != filters[POKEMON_PROPERTY.GENERATION]:
                 continue
 
-            if filters.get(POKEMON_PROPERTY.TYPES) and filters[POKEMON_PROPERTY.TYPES] not in data[POKEMON_PROPERTY.TYPES]:
+            if filters.get(POKEMON_PROPERTY.TYPES) and filters[POKEMON_PROPERTY.TYPES] not in data[POKEMON_PROPERTY.TYPES.value]:
                 continue
 
             if filters.get(POKEMON_PROPERTY.MOVES):
