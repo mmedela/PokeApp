@@ -18,7 +18,7 @@
             hx-trigger="input changed delay:250ms" 
             hx-target="#search-results" 
             hx-indicator="#loading"
-            name="name"
+            name="{{pokemon_property.NAME.value}}"
             onfocus="showResults()"
             oninput="showResults()">
 
@@ -38,7 +38,7 @@
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block">Generation:</label>
-                <select id="generation" name="generation" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.GENERATION.value}}" name="{{pokemon_property.GENERATION.value}}" class="border p-2 rounded w-full">
                     <option value="">Any</option>
                     <option value="generation-i">Gen 1 (Kanto)</option>
                     <option value="generation-ii">Gen 2 (Johto)</option>
@@ -54,7 +54,7 @@
     
             <div>
                 <label class="block">Super Effective Against:</label>
-                <select id="super-effective-against" name="super-effective-against" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.SUPER_EFFECTIVE.value}}" name="{{pokemon_property.SUPER_EFFECTIVE.value}}" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -67,7 +67,7 @@
 
             <div>
                 <label class="block">Resistant To:</label>
-                <select id="resistant-to" name="resistant-to" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.RESISTANT_TO.value}}" name="{{pokemon_property.RESISTANT_TO.value}}" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -80,7 +80,7 @@
 
             <div>
                 <label class="block">Innmune To:</label>
-                <select id="immune-to" name="immune-to" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.IMMUNE_TO.value}}" name="{{pokemon_property.IMMUNE_TO.value}}" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -93,7 +93,7 @@
 
             <div>
                 <label class="block">Vulnerable To:</label>
-                <select id="vulnerable-to" name="vulnerable-to" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.VULNERABLE_TO.value}}" name="{{pokemon_property.VULNERABLE_TO.value}}" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -106,20 +106,20 @@
     
             <div>
                 <label class="block">Move Name:</label>
-                <input type="text" id="move" name="move" class="border p-2 rounded w-full" placeholder="Enter move name (Ej: vine whip, bind)">
+                <input type="text" id="{{pokemon_property.MOVES.value}}" name="{{pokemon_property.MOVES.value}}" class="border p-2 rounded w-full" placeholder="Enter move name (Ej: vine whip, bind)">
             </div>
     
             <div>
                 <label class="block">Weight Range (Kg):</label>
                 <div class="flex space-x-2">
-                    <input type="number" id="min-weight" name="min-weight" class="border p-2 rounded w-1/2" placeholder="Min" min="0">
-                    <input type="number" id="max-weight" name="max-weight" class="border p-2 rounded w-1/2" placeholder="Max" min="0">
+                    <input type="number" id="{{pokemon_property.MIN_WEIGHT.value}}" name="{{pokemon_property.MIN_WEIGHT.value}}" class="border p-2 rounded w-1/2" placeholder="Min" min="0">
+                    <input type="number" id="{{pokemon_property.MAX_WEIGHT.value}}" name="{{pokemon_property.MAX_WEIGHT.value}}" class="border p-2 rounded w-1/2" placeholder="Max" min="0">
                 </div>
             </div>
     
             <div>
                 <label class="block">Types:</label>
-                <select id="types" name="types" class="border p-2 rounded w-full">
+                <select id="{{pokemon_property.TYPES.value}}" name="{{pokemon_property.TYPES.value}}" class="border p-2 rounded w-full">
                     {% for type in type_list %}
                         {% if loop.first %}
                             <option value="">{{ type }}</option>
@@ -132,7 +132,7 @@
         
             <div>
                 <label class="block">Pokédex Number:</label>
-                <input type="number" id="pokedex-number" name="pokedex-number" class="border p-2 rounded w-full" placeholder="Enter number">
+                <input type="number" id="{{pokemon_property.POKEDEX_NUMBER.value}}" name="{{pokemon_property.POKEDEX_NUMBER.value}}" class="border p-2 rounded w-full" placeholder="Enter number">
             </div>
         </div>
     
@@ -140,18 +140,17 @@
                 hx-get="/search-results"
                 hx-target="#search-results-container"
                 hx-trigger="click"
-                hx-include="[name=generation], 
-                            [name=move], 
-                            [name=region], 
-                            [name=min-weight], 
-                            [name=max-weight], 
-                            [name=vulnerable-to], 
-                            [name=super-effective], 
-                            [name=resistant-to], 
-                            [name=immune-to], 
-                            [name=types], 
-                            [name=pokedex-number], 
-                            [name=name]"
+                hx-include="[name={{pokemon_property.GENERATION.value}}], 
+                            [name={{pokemon_property.MOVES.value}}], 
+                            [name={{pokemon_property.MIN_WEIGHT.value}}], 
+                            [name={{pokemon_property.MAX_WEIGHT.value}}], 
+                            [name={{pokemon_property.VULNERABLE_TO.value}}], 
+                            [name={{pokemon_property.SUPER_EFFECTIVE.value}}], 
+                            [name={{pokemon_property.RESISTANT_TO.value}}], 
+                            [name={{pokemon_property.IMMUNE_TO.value}}], 
+                            [name={{pokemon_property.TYPES.value}}], 
+                            [name={{pokemon_property.POKEDEX_NUMBER.value}}], 
+                            [name={{pokemon_property.NAME.value}}]"
                 onclick="toggleAdvancedSearch()">
             Search
         </button>

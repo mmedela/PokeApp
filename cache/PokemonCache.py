@@ -1,5 +1,7 @@
 import json
 
+from common import POKEMON_PROPERTY
+
 class PokemonCache:
     
     def __init__(self, cache_file, fetchPokemonListCallBack, fetchPokemonDataCallBack, fetchTypeEffectivenessCallBack):
@@ -39,16 +41,16 @@ class PokemonCache:
 
         for data in self.pokemonData.values():
             data["vulnerable_to"] = list({
-                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get("double_damage_from", [])
+                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get(POKEMON_PROPERTY.VULNERABLE_TO.value, [])
             })
             data["resistant_to"] = list({
-                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get("half_damage_from", [])
+                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get(POKEMON_PROPERTY.RESISTANT_TO.value, [])
             })
             data["immune_to"] = list({
-                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get("no_damage_from", [])
+                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get(POKEMON_PROPERTY.IMMUNE_TO.value, [])
             })
             data["super_effective"] = list({
-                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get("double_damage_to", [])
+                eff for t in data["types"] for eff in type_effectiveness.get(t, {}).get(POKEMON_PROPERTY.SUPER_EFFECTIVE.value, [])
             })
 
         self.saveCache()
